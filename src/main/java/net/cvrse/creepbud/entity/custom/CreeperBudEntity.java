@@ -1,4 +1,5 @@
 package net.cvrse.creepbud.entity.custom;
+import net.cvrse.creepbud.entity.ai.HideBehindOwnerFromCatGoal;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.AnimationState;
 import net.minecraft.entity.EntityType;
@@ -42,6 +43,7 @@ public class CreeperBudEntity extends TameableEntity {
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this)); //can swim
         this.goalSelector.add(1, new TameableEntity.TameableEscapeDangerGoal(1.5, DamageTypeTags.PANIC_ENVIRONMENTAL_CAUSES));
+        this.goalSelector.add(1, new HideBehindOwnerFromCatGoal((TameableEntity)this, 1.0D, 1.3D, 6.0D));
         this.goalSelector.add(2, new SitGoal(this));
         this.goalSelector.add(3, new FollowOwnerGoal(this, 1D, 5.0F, 2.0F));
         this.goalSelector.add(4, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.GUNPOWDER), false)); //follow when holding Gunpowder
