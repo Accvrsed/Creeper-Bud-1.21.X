@@ -6,9 +6,14 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.DyeItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
@@ -17,12 +22,14 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.util.math.MathHelper;
 // Push test
 public class CreeperBudEntity extends TameableEntity {
+    private static final TrackedData<Integer> COLLAR_COLOR = DataTracker.registerData(CreeperBudEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
     public float headYaw;
@@ -47,6 +54,7 @@ public class CreeperBudEntity extends TameableEntity {
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
+        Item item = stack.getItem();
 
         if (this.getWorld().isClient()) {
             return ActionResult.SUCCESS;
@@ -56,19 +64,31 @@ public class CreeperBudEntity extends TameableEntity {
             if (!player.getAbilities().creativeMode) {
                 stack.decrement(1);
             }
-
             if (this.random.nextInt(3) == 0) { // 1 in 3 chance
                 this.setOwner(player);
                 this.setTamed(true, true);
                 this.getNavigation().stop();
                 this.setSitting(true);
-
                 this.getWorld().sendEntityStatus(this, (byte) 7); // hearts
             } else {
                 this.getWorld().sendEntityStatus(this, (byte) 6); // smoke
             }
-
             return ActionResult.SUCCESS;
+        }
+        if (this.isTamed()){
+            if (this.isBreedingItem(stack) && this.getHealth() < this.getMaxHealth()){
+                stack.decrementUnlessCreative(1, player);
+                this.heal(2.0F);
+                return ActionResult.success(this.getWorld().isClient());
+            }
+        }
+        if (item instanceof DyeItem dyeItem && this.isOwner(player)){
+            DyeColor dyeColor = dyeItem.getColor();
+            if (dyeColor != this.getCollarColor()){
+                this.setCollarColor(dyeColor);
+                stack.decrementUnlessCreative(1, player);
+                return ActionResult.SUCCESS;
+            }
         }
 
         if (this.isTamed() && this.isOwner(player)) {
@@ -90,7 +110,9 @@ public class CreeperBudEntity extends TameableEntity {
     public boolean isBreedingItem(ItemStack stack) {
         return stack.isOf(Items.GUNPOWDER);
     }
-
+    public DyeColor getCollarColor() {
+        return DyeColor.byId(this.dataTracker.get(COLLAR_COLOR));
+    }
     private void setupAnimationStates() {
         if (this.idleAnimationTimeout <= 0){
             this.idleAnimationTimeout = 40;
@@ -131,7 +153,22 @@ public class CreeperBudEntity extends TameableEntity {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_PARROT_IMITATE_CREEPER;
+        if (this.random.nextInt(3) == 0) {
+            return null;
+        } else {
+            return SoundEvents.ENTITY_PARROT_IMITATE_CREEPER;
+        }
+    }
+
+    @Override
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(COLLAR_COLOR, DyeColor.BLUE.getId());
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        return 0.4F;
     }
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
@@ -142,6 +179,9 @@ public class CreeperBudEntity extends TameableEntity {
         return SoundEvents.ENTITY_CREEPER_DEATH;
     }
 
+    private void setCollarColor(DyeColor color) {
+        this.dataTracker.set(COLLAR_COLOR, color.getId());
+    }
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {

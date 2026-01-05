@@ -39,9 +39,9 @@ public class CreeperBudModel<T extends CreeperBudEntity> extends SinglePartEntit
 
         ModelPartData head = body.addChild("head", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, -11.0F, 0.0F));
 
-        ModelPartData whisker2_r1 = head.addChild("whisker2_r1", ModelPartBuilder.create().uv(24, 1).mirrored().cuboid(-1.8907F, -0.181F, 0.1176F, 3.0F, 2.0F, 0.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.of(3.9366F, -3.3715F, -4.0292F, 1.8737F, 0.0801F, 1.567F));
+        ModelPartData whisker2_r1 = head.addChild("whisker2_r1", ModelPartBuilder.create().uv(24, 3).mirrored().cuboid(-1.8907F, -0.181F, 0.1176F, 3.0F, 2.0F, 0.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.of(3.9366F, -3.3715F, -4.0292F, 1.8737F, 0.0801F, 1.567F));
 
-        ModelPartData whisker1_r1 = head.addChild("whisker1_r1", ModelPartBuilder.create().uv(24, 1).cuboid(-1.1093F, -0.181F, 0.1176F, 3.0F, 2.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(-3.9366F, -3.3715F, -4.0292F, 1.8737F, -0.0801F, -1.567F));
+        ModelPartData whisker1_r1 = head.addChild("whisker1_r1", ModelPartBuilder.create().uv(24, 3).cuboid(-1.1093F, -0.181F, 0.1176F, 3.0F, 2.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(-3.9366F, -3.3715F, -4.0292F, 1.8737F, -0.0801F, -1.567F));
 
         ModelPartData whisker0_r1 = head.addChild("whisker0_r1", ModelPartBuilder.create().uv(24, 0).cuboid(-4.0F, 0.0F, 0.0F, 8.0F, 4.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -8.2497F, -3.7187F, 1.4399F, 0.0F, 3.1416F));
 
@@ -87,7 +87,6 @@ public class CreeperBudModel<T extends CreeperBudEntity> extends SinglePartEntit
         head.yaw = MathHelper.lerp(0.1F, head.yaw, headYaw * 0.017453292F);
         head.pitch = MathHelper.lerp(0.1F, head.pitch, headPitch * 0.017453292F);
     }
-
     @Override
     public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, int color) {
         Creeper_Bud.render(matrices, vertexConsumer, light, overlay, color);
