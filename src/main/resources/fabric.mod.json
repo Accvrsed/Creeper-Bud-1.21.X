@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "creepbud",
+	"version": "${version}",
+	"name": "Creeper Bud",
+	"description": "Adds a new Creeper Bud pet to join you on your adventures!",
+	"authors": [
+		"Accvrsed!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/Accvrsed/Creeper-Bud-1.21.X"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/creepbud/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.cvrse.creepbud.CreeperBud"
+		],
+		"fabric-datagen": [
+			"net.cvrse.creepbud.CreeperBudDataGenerator"
+		],
+		"client": [
+			"net.cvrse.creepbud.CreeperBudClient"
+		]
+	},
+	"mixins": [
+		"creepbud.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.21",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
