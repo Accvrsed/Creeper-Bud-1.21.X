@@ -8,7 +8,7 @@ import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+
 
 
 public class CreeperBudModel<T extends CreeperBudEntity> extends SinglePartEntityModel<T> {
@@ -80,13 +80,13 @@ public class CreeperBudModel<T extends CreeperBudEntity> extends SinglePartEntit
         this.updateAnimation(entity.idleAnimationState, CreeperBudAnimations.ANIM_BUD_IDLE, ageInTicks, 1f);
     }
 
-    private void setHeadAngles(float headYaw, float headPitch){
-        headYaw = MathHelper.clamp(headYaw, -30.0F, 30.0F);
-        headPitch = MathHelper.clamp(headPitch, -25.0F, 45.0F);
-
-        head.yaw = MathHelper.lerp(0.1F, head.yaw, headYaw * 0.017453292F);
-        head.pitch = MathHelper.lerp(0.1F, head.pitch, headPitch * 0.017453292F);
-    }
+//    private void setHeadAngles(float headYaw, float headPitch){
+//        headYaw = MathHelper.clamp(headYaw, -30.0F, 30.0F);
+//        headPitch = MathHelper.clamp(headPitch, -25.0F, 45.0F);
+//
+//        head.yaw = MathHelper.lerp(0.1F, head.yaw, headYaw * 0.017453292F);
+//        head.pitch = MathHelper.lerp(0.1F, head.pitch, headPitch * 0.017453292F);
+//    }
     @Override
     public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, int color) {
         Creeper_Bud.render(matrices, vertexConsumer, light, overlay, color);
