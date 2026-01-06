@@ -66,27 +66,60 @@ public class CreeperBudModel<T extends CreeperBudEntity> extends SinglePartEntit
         ModelPartData leg_front_left_r1 = leg_front_left.addChild("leg_front_left_r1", ModelPartBuilder.create().uv(0, 16).cuboid(0.0F, -4.0F, -6.0F, 3.0F, 4.0F, 4.0F, new Dilation(0.0F)), ModelTransform.of(-2.5F, 4.0F, 3.0F, 0.0F, -0.2618F, 0.0F));
         return TexturedModelData.of(modelData, 64, 32);
     }
+
     @Override
-    public void setAngles(CreeperBudEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        // Reset transforms first
-        this.getPart().traverse().forEach(ModelPart::resetTransform);
+    public void animateModel(CreeperBudEntity entity, float limbAngle, float limbDistance, float tickDelta) {
+        if (entity.isInSittingPose()) {
+            // === SITTING POSE (NO ANIMATIONS) ===
+            this.getPart().traverse().forEach(ModelPart::resetTransform);
+            // Body (this is the main anchor)
+            this.body.setPivot(0.0F, 18.25F, 0.0F);
+            this.body.pitch = 0.0873F;
 
-        // Head rotation
-        head.yaw = netHeadYaw * ((float)Math.PI/180F);
-        head.pitch = headPitch * ((float)Math.PI/180F);
+            this.head.setPivot(0.0F, -10.75F, -1.0F);
+            // Back right leg
+            this.leg_back_right.setPivot(-2.5F, 14.2F, 2.0F);
+            this.leg_back_right.pitch = -0.7854F;
+            this.leg_back_right.yaw   =  0.1571F;
+            this.leg_back_right.roll  =  1.3439F;
 
-        // walking animation
-        this.animateMovement(CreeperBudAnimations.ANIM_BUD_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
-        this.updateAnimation(entity.idleAnimationState, CreeperBudAnimations.ANIM_BUD_IDLE, ageInTicks, 1f);
+            // Front right leg
+            this.leg_front_right.setPivot(-2.5F, 14.0F, -2.0F);
+            this.leg_front_right.pitch = -1.5184F;
+            this.leg_front_right.yaw   = -0.0007F;
+            this.leg_front_right.roll  =  0.2618F;
+
+            // Back left leg
+            this.leg_back_left.setPivot(2.5F, 14.2F, 2.0F);
+            this.leg_back_left.pitch = -0.7854F;
+            this.leg_back_left.yaw   = -0.1571F;
+            this.leg_back_left.roll  = -1.3439F;
+
+            // Front left leg
+            this.leg_front_left.setPivot(2.5F, 14.3F, -2.0F);
+            this.leg_front_left.pitch = -1.5359F;
+            this.leg_front_left.yaw   = -0.0007F;
+            this.leg_front_left.roll  = -0.2618F;
+        } else {
+            this.getPart().traverse().forEach(ModelPart::resetTransform);
+        }
     }
 
-//    private void setHeadAngles(float headYaw, float headPitch){
-//        headYaw = MathHelper.clamp(headYaw, -30.0F, 30.0F);
-//        headPitch = MathHelper.clamp(headPitch, -25.0F, 45.0F);
-//
-//        head.yaw = MathHelper.lerp(0.1F, head.yaw, headYaw * 0.017453292F);
-//        head.pitch = MathHelper.lerp(0.1F, head.pitch, headPitch * 0.017453292F);
-//    }
+    @Override
+    public void setAngles(CreeperBudEntity entity, float f, float g, float h, float i, float j) {
+//        this.getPart().traverse().forEach(ModelPart::resetTransform);
+        this.head.pitch = j * (float) (Math.PI / 180.0);
+        this.head.yaw = i * (float) (Math.PI / 180.0);
+
+        this.animateMovement(CreeperBudAnimations.ANIM_BUD_WALK, f, g, 2f, 2.5f);
+        if (entity.isInSittingPose()) {
+            this.updateAnimation(entity.idleAnimationState, CreeperBudAnimations.ANIM_BUD_SIT_IDLE, h, 1f);
+        } else {
+            this.updateAnimation(entity.idleAnimationState, CreeperBudAnimations.ANIM_BUD_IDLE, h, 1f);
+        }
+
+
+    }
     @Override
     public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, int color) {
         Creeper_Bud.render(matrices, vertexConsumer, light, overlay, color);

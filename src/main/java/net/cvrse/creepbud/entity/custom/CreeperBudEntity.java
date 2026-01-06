@@ -10,6 +10,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -37,20 +38,21 @@ public class CreeperBudEntity extends TameableEntity {
     public float headPitch;
     public CreeperBudEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
+        this.setTamed(false, false);
     }
 
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this)); //can swim
         this.goalSelector.add(1, new TameableEntity.TameableEscapeDangerGoal(1.5, DamageTypeTags.PANIC_ENVIRONMENTAL_CAUSES));
-        this.goalSelector.add(1, new HideBehindOwnerFromCatGoal((TameableEntity)this, 1.0D, 1.3D, 6.0D));
         this.goalSelector.add(2, new SitGoal(this));
-        this.goalSelector.add(3, new FollowOwnerGoal(this, 1D, 5.0F, 2.0F));
-        this.goalSelector.add(4, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.GUNPOWDER), false)); //follow when holding Gunpowder
+        this.goalSelector.add(3, new HideBehindOwnerFromCatGoal<>(this, 1.0D, 1.3D, 6.0D));
+        this.goalSelector.add(4, new FollowOwnerGoal(this, 1D, 5.0F, 2.0F));
+        this.goalSelector.add(5, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.GUNPOWDER), false)); //follow when holding Gunpowder
 
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 1.0));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F)); //Look at player
-        this.goalSelector.add(7, new LookAroundGoal(this));
+        this.goalSelector.add(6, new LookAroundGoal(this));
     }
 
     @Override
@@ -103,10 +105,19 @@ public class CreeperBudEntity extends TameableEntity {
     }
 
     public static DefaultAttributeContainer.Builder createAttributes() {
-        return TameableEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 8D)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25D)
+        return MobEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 8.0D)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25F)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0D);
+    }
+    @Override
+    protected void updateAttributesForTamed() {
+        if (this.isTamed()) {
+            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(30.0);
+            this.setHealth(30.0F);
+        } else {
+            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(8.0);
+        }
     }
     @Override
     public boolean isBreedingItem(ItemStack stack) {
