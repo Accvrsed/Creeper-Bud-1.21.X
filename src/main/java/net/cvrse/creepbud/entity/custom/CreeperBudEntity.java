@@ -26,6 +26,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.util.math.MathHelper;
@@ -119,6 +120,12 @@ public class CreeperBudEntity extends TameableEntity {
             this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(8.0);
         }
     }
+
+    @Override
+    protected Vec3d getLeashOffset() {
+        return new Vec3d(0.0, this.getHeight() * 0.6, 0.0625);
+    }
+
     @Override
     public boolean isBreedingItem(ItemStack stack) {
         return stack.isOf(Items.GUNPOWDER);
