@@ -116,5 +116,4 @@ public class CreeperBudAnimations {
                         new Keyframe(2.0F, AnimationHelper.createRotationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR)
                 ))
                 .build();
-
 }

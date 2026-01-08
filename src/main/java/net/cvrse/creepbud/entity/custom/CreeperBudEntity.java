@@ -11,6 +11,8 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -19,6 +21,8 @@ import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.DustParticleEffect;
+
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.world.ServerWorld;
@@ -32,6 +36,8 @@ import net.minecraft.world.World;
 import java.util.List;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.util.math.MathHelper;
+import org.joml.Vector3f;
+
 // Push test
 public class CreeperBudEntity extends TameableEntity {
     private static final TrackedData<Integer> COLLAR_COLOR = DataTracker.registerData(CreeperBudEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -197,14 +203,15 @@ public class CreeperBudEntity extends TameableEntity {
         return handled;
     }
     private void triggerBurst() {
+
+        double radius = this.explosionRadius;
+        Vec3d explosionPos = this.getPos();
+
         if (!this.getWorld().isClient) {
-            double radius = this.explosionRadius;
-
-            Vec3d explosionPos = this.getPos();
-
             List<Entity> entities = this.getWorld().getOtherEntities(this, this.getBoundingBox().expand(radius));
             for (Entity entity : entities) {
                 if (entity == this) continue;
+                if(this.isTamed() && entity == this.getOwner()) continue;
 
                 Vec3d diff = entity.getPos().subtract(explosionPos);
                 double distance = diff.length();
@@ -217,15 +224,35 @@ public class CreeperBudEntity extends TameableEntity {
                 entity.setVelocity(entity.getVelocity().add(knockback));
                 entity.velocityModified = true;
 
-//                OLD KNOCKBACK
-//                if (distance == 0) continue;
-//                double strength = (1.0 - distance / radius); // falloff
-//                Vec3d knockback = diff.normalize().multiply(strength * 1.5);
-//                entity.setVelocity(entity.getVelocity().add(knockback));
-//                entity.velocityModified = true;
+                if (entity instanceof LivingEntity living) {
+                    int duration = 100; // 5 seconds
+                    int amplifier = 0; // Poison I
+                    living.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, duration, amplifier));
+                }
             }
         }
         playBurstSound();
+        if (this.getWorld().isClient) {
+            Vector3f green = new Vector3f(0.2f, 1.0f, 0.2f); // RGB (0-1) green
+            float size = 0.5f; // particle size
+            for (int i = 0; i < 30; i++) { // spawn 30 particles
+                double spread = 1.5;
+                double offsetX = (this.random.nextDouble() - 0.5) * spread * 2;
+                double offsetY = this.random.nextDouble() * spread;
+                double offsetZ = (this.random.nextDouble() - 0.5) * spread * 2;
+                double velX = (this.random.nextDouble() - 0.5) * 0.2; // slower velocities
+                double velY = (this.random.nextDouble() - 0.5) * 0.2;
+                double velZ = (this.random.nextDouble() - 0.5) * 0.2;
+
+                this.getWorld().addParticle(
+                        new DustParticleEffect(green, size), // you can change particle type here
+                        this.getX() + offsetX,
+                        this.getY() + offsetY,
+                        this.getZ() + offsetZ,
+                        velX, velY, velZ
+                );
+            }
+        }
         this.dataTracker.set(BURSTING, false);
     }
     @Override
