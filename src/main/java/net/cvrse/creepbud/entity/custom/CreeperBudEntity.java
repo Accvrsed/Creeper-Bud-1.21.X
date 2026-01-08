@@ -1,5 +1,6 @@
 package net.cvrse.creepbud.entity.custom;
 import net.cvrse.creepbud.entity.ai.HideBehindOwnerFromCatGoal;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.AnimationState;
 import net.minecraft.entity.EntityType;
@@ -28,13 +29,16 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import java.util.List;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.util.math.MathHelper;
 // Push test
 public class CreeperBudEntity extends TameableEntity {
     private static final TrackedData<Integer> COLLAR_COLOR = DataTracker.registerData(CreeperBudEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Boolean> BURSTING = DataTracker.registerData(CreeperBudEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
+    private int explosionRadius = 3;
     public float headYaw;
     public float headPitch;
     public CreeperBudEntity(EntityType<? extends TameableEntity> entityType, World world) {
@@ -104,7 +108,6 @@ public class CreeperBudEntity extends TameableEntity {
 
         return super.interactMob(player, hand);
     }
-
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 8.0D)
@@ -148,9 +151,11 @@ public class CreeperBudEntity extends TameableEntity {
         super.tick();
         if (this.getWorld().isClient()) {
             this.setupAnimationStates();
-
         }
-    }
+        if (this.dataTracker.get(BURSTING)) {
+                triggerBurst();
+            }
+        }
 
     @Override
     public void tickMovement() {
@@ -180,9 +185,53 @@ public class CreeperBudEntity extends TameableEntity {
         }
     }
 
+    protected void playBurstSound() {
+        this.playSound(SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, 0.5F, 1.0F);
+    }
+    @Override
+    public boolean damage(DamageSource source, float amount) {
+        boolean handled = super.damage(source, amount);
+        if(handled && this.random.nextFloat() <= 0.25f && !this.dataTracker.get(BURSTING)) {
+           this.dataTracker.set(BURSTING, true);
+            }
+        return handled;
+    }
+    private void triggerBurst() {
+        if (!this.getWorld().isClient) {
+            double radius = this.explosionRadius;
+
+            Vec3d explosionPos = this.getPos();
+
+            List<Entity> entities = this.getWorld().getOtherEntities(this, this.getBoundingBox().expand(radius));
+            for (Entity entity : entities) {
+                if (entity == this) continue;
+
+                Vec3d diff = entity.getPos().subtract(explosionPos);
+                double distance = diff.length();
+                if (distance > radius || distance == 0) continue;
+                Vec3d direction = diff.normalize();
+                double exposure = 1.0 - (distance / radius);
+                double power = exposure * exposure;
+                double force = power * 2.5;
+                Vec3d knockback = direction.multiply(force);
+                entity.setVelocity(entity.getVelocity().add(knockback));
+                entity.velocityModified = true;
+
+//                OLD KNOCKBACK
+//                if (distance == 0) continue;
+//                double strength = (1.0 - distance / radius); // falloff
+//                Vec3d knockback = diff.normalize().multiply(strength * 1.5);
+//                entity.setVelocity(entity.getVelocity().add(knockback));
+//                entity.velocityModified = true;
+            }
+        }
+        playBurstSound();
+        this.dataTracker.set(BURSTING, false);
+    }
     @Override
     protected void initDataTracker(DataTracker.Builder builder) {
         super.initDataTracker(builder);
+        builder.add(BURSTING, false);
         builder.add(COLLAR_COLOR, DyeColor.BLUE.getId());
     }
 

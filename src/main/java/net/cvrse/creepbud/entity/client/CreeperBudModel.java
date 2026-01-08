@@ -69,9 +69,9 @@ public class CreeperBudModel<T extends CreeperBudEntity> extends SinglePartEntit
 
     @Override
     public void animateModel(CreeperBudEntity entity, float limbAngle, float limbDistance, float tickDelta) {
+        this.getPart().traverse().forEach(ModelPart::resetTransform);
         if (entity.isInSittingPose()) {
-            // === SITTING POSE (NO ANIMATIONS) ===
-            this.getPart().traverse().forEach(ModelPart::resetTransform);
+//            // === SITTING POSE (NO ANIMATIONS) ===
             // Body (this is the main anchor)
             this.body.setPivot(0.0F, 18.25F, 0.0F);
             this.body.pitch = 0.0873F;
@@ -100,8 +100,8 @@ public class CreeperBudModel<T extends CreeperBudEntity> extends SinglePartEntit
             this.leg_front_left.pitch = -1.5359F;
             this.leg_front_left.yaw   = -0.0007F;
             this.leg_front_left.roll  = -0.2618F;
-        } else {
-            this.getPart().traverse().forEach(ModelPart::resetTransform);
+//        } else {
+//            this.getPart().traverse().forEach(ModelPart::resetTransform);
         }
     }
 
@@ -112,13 +112,12 @@ public class CreeperBudModel<T extends CreeperBudEntity> extends SinglePartEntit
         this.head.yaw = i * (float) (Math.PI / 180.0);
 
         this.animateMovement(CreeperBudAnimations.ANIM_BUD_WALK, f, g, 2f, 2.5f);
-        if (entity.isInSittingPose()) {
-            this.updateAnimation(entity.idleAnimationState, CreeperBudAnimations.ANIM_BUD_SIT_IDLE, h, 1f);
-        } else {
-            this.updateAnimation(entity.idleAnimationState, CreeperBudAnimations.ANIM_BUD_IDLE, h, 1f);
-        }
 
-
+            if (entity.isInSittingPose()) {
+                this.updateAnimation(entity.idleAnimationState, CreeperBudAnimations.ANIM_BUD_SIT_IDLE, h, 1f);
+            } else {
+                this.updateAnimation(entity.idleAnimationState, CreeperBudAnimations.ANIM_BUD_IDLE, h, 1f);
+            }
     }
     @Override
     public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, int color) {
