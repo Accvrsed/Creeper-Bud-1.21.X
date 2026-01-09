@@ -1,0 +1,24 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:creeper_head"
+    },
+    "title": "Tiny Terror, Big Heart",
+    "description": "Tame an explosive new friend!",
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "parent": "creepbud:grow_a_bud",
+  "criteria": {
+    "Trigger": {
+      "trigger": "minecraft:tame_animal",
+      "conditions": {
+        "entity": {
+          "type": "creepbud:creeperbud"
+        }
+      }
+    }
+  }
+}

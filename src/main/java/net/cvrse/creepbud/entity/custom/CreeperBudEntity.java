@@ -75,7 +75,7 @@ public class CreeperBudEntity extends TameableEntity {
             return ActionResult.SUCCESS;
         }
 
-        if (!this.isTamed() && stack.isOf(Items.GUNPOWDER)) {
+        if (!this.isTamed() && this.isBreedingItem(stack)) {
             if (!player.getAbilities().creativeMode) {
                 stack.decrement(1);
             }
@@ -91,9 +91,10 @@ public class CreeperBudEntity extends TameableEntity {
             return ActionResult.SUCCESS;
         }
         if (this.isTamed()){
-            if (this.isBreedingItem(stack) && this.getHealth() < this.getMaxHealth()){
+            if ((stack.isOf(Items.GUNPOWDER) || stack.isOf(Items.BONE_MEAL)) && this.getHealth() < this.getMaxHealth()){
                 stack.decrementUnlessCreative(1, player);
                 this.heal(2.0F);
+                this.playSound(SoundEvents.ITEM_BONE_MEAL_USE, 1.0F, 1.0F);
                 return ActionResult.success(this.getWorld().isClient());
             }
         }
@@ -225,7 +226,7 @@ public class CreeperBudEntity extends TameableEntity {
                 entity.velocityModified = true;
 
                 if (entity instanceof LivingEntity living) {
-                    int duration = 100; // 5 seconds
+                    int duration = 80; // 3 seconds
                     int amplifier = 0; // Poison I
                     living.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, duration, amplifier));
                 }

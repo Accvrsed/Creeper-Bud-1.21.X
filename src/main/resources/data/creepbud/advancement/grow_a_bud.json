@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "id": "creepbud:boomflower_seeds"
+    },
+    "title": "Grow-a-Bud",
+    "description": "Plant a Boomflower",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "minecraft:husbandry/root",
+  "criteria": {
+    "boomflower": {
+      "conditions": {
+        "location": [
+          {
+            "block": "creepbud:boomflower_crop",
+            "condition": "minecraft:block_state_property"
+          }
+        ]
+      },
+      "trigger": "minecraft:placed_block"
+    }
+  }
+}
