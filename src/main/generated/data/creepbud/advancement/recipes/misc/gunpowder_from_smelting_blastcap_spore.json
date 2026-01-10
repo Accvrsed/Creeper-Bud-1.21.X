@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_boomflower_seeds": {
+    "has_blastcap_spore": {
       "conditions": {
         "items": [
           {
-            "items": "creepbud:boomflower_seeds"
+            "items": "creepbud:blastcap_spore"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:gunpowder_from_smelting_boomflower_seeds"
+        "recipe": "minecraft:gunpowder_from_smelting_blastcap_spore"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_boomflower_seeds"
+      "has_blastcap_spore"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:gunpowder_from_smelting_boomflower_seeds"
+      "minecraft:gunpowder_from_smelting_blastcap_spore"
     ]
   }
 }

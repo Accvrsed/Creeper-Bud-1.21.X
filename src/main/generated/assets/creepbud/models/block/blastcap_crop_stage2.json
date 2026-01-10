@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cross",
   "textures": {
-    "cross": "creepbud:block/boomflower_crop_stage0"
+    "cross": "creepbud:block/blastcap_crop_stage2"
   }
 }

@@ -2,7 +2,7 @@ package net.cvrse.creepbud.datagen;
 
 
 import net.cvrse.creepbud.block.ModBlocks;
-import net.cvrse.creepbud.block.custom.BoomflowerCropBlock;
+import net.cvrse.creepbud.block.custom.BlastcapCropBlock;
 import net.cvrse.creepbud.item.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
@@ -21,9 +21,9 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
     @Override
     public void generate() {
 
-        BlockStatePropertyLootCondition.Builder builder2 = BlockStatePropertyLootCondition.builder(ModBlocks.BOOMFLOWER_CROP)
-                .properties(StatePredicate.Builder.create().exactMatch(BoomflowerCropBlock.AGE, 3));
-        this.addDrop(ModBlocks.BOOMFLOWER_CROP, this.cropDrops(ModBlocks.BOOMFLOWER_CROP, Items.GUNPOWDER, ModItems.BOOMFLOWER_SEEDS, builder2));
+        BlockStatePropertyLootCondition.Builder builder2 = BlockStatePropertyLootCondition.builder(ModBlocks.BLASTCAP_CROP)
+                .properties(StatePredicate.Builder.create().exactMatch(BlastcapCropBlock.AGE, 3));
+        this.addDrop(ModBlocks.BLASTCAP_CROP, this.cropDrops(ModBlocks.BLASTCAP_CROP, Items.GUNPOWDER, ModItems.BLASTCAP_SPORE, builder2));
 
     }
 }

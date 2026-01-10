@@ -1,7 +1,7 @@
 package net.cvrse.creepbud.block;
 
 import net.cvrse.creepbud.CreeperBud;
-import net.cvrse.creepbud.block.custom.BoomflowerCropBlock;
+import net.cvrse.creepbud.block.custom.BlastcapCropBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
@@ -15,8 +15,8 @@ import net.minecraft.util.Identifier;
 
 public class ModBlocks {
 
-    public static final Block BOOMFLOWER_CROP = registerBlockWithoutBlockItem("boomflower_crop",
-            new BoomflowerCropBlock(AbstractBlock.Settings.create().noCollision()
+    public static final Block BLASTCAP_CROP = registerBlockWithoutBlockItem("blastcap_crop",
+            new BlastcapCropBlock(AbstractBlock.Settings.create().noCollision()
                     .ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY).mapColor(MapColor.DARK_GREEN)));
 
     private static Block registerBlockWithoutBlockItem(String name, Block block) {

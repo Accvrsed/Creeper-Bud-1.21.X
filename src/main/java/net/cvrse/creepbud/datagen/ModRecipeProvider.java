@@ -20,13 +20,13 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 
     @Override
     public void generate(RecipeExporter exporter) {
-        List<ItemConvertible> BOOMFLOWER = List.of(ModItems.BOOMFLOWER_SEEDS);
+        List<ItemConvertible> BLASTCAP = List.of(ModItems.BLASTCAP_SPORE);
 
-        offerSmelting(exporter, BOOMFLOWER, RecipeCategory.MISC, Items.GUNPOWDER, 1.0f, 200, "creepbud");
+        offerSmelting(exporter, BLASTCAP, RecipeCategory.MISC, Items.GUNPOWDER, 1.0f, 200, "creepbud");
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.LIME_DYE, 1)
-                .input(ModItems.BOOMFLOWER_SEEDS)
-                .criterion(hasItem(ModItems.BOOMFLOWER_SEEDS), conditionsFromItem(ModItems.BOOMFLOWER_SEEDS))
+                .input(ModItems.BLASTCAP_SPORE)
+                .criterion(hasItem(ModItems.BLASTCAP_SPORE), conditionsFromItem(ModItems.BLASTCAP_SPORE))
                 .offerTo(exporter);
     }
 }

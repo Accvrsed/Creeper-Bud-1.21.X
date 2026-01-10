@@ -15,7 +15,7 @@ public class ModItemGroups {
             FabricItemGroup.builder().icon(() -> new ItemStack(ModItems.CREEPERBUD_SPAWN_EGG))
                     .displayName(Text.translatable("itemgroup.creepbud.creeperbud_items"))
                     .entries((displayContext, entries) -> {
-                        entries.add(ModItems.BOOMFLOWER_SEEDS);
+                        entries.add(ModItems.BLASTCAP_SPORE);
                         entries.add(ModItems.CREEPERBUD_SPAWN_EGG);
                     }).build());
 

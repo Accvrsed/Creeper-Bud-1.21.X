@@ -4,17 +4,18 @@ import net.cvrse.creepbud.CreeperBud;
 import net.cvrse.creepbud.block.ModBlocks;
 import net.cvrse.creepbud.entity.ModEntities;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.item.AliasedBlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.item.SpawnEggItem;
+import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+import java.util.List;
+
 public class ModItems {
-    public static final Item BOOMFLOWER_SEEDS = registerItem("boomflower_seeds",
-            new AliasedBlockItem(ModBlocks.BOOMFLOWER_CROP, new Item.Settings()));
+    public static final Item BLASTCAP_SPORE = registerItem("blastcap_spore",
+            new AliasedBlockItem(ModBlocks.BLASTCAP_CROP, new Item.Settings()));
 
     public static final Item CREEPERBUD_SPAWN_EGG  = registerItem("creeperbud_spawn_egg",
             new SpawnEggItem(ModEntities.CREEPERBUD, 0x9dc783, 0xbfaf5f, new Item.Settings()));
@@ -27,7 +28,7 @@ public class ModItems {
         CreeperBud.LOGGER.info("Registering Mod Items for " + CreeperBud.MOD_ID);
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(entries -> {
-            entries.add(BOOMFLOWER_SEEDS);
+            entries.add(BLASTCAP_SPORE);
 
         });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(entries -> {

@@ -1,7 +1,7 @@
 package net.cvrse.creepbud.datagen;
 
 import net.cvrse.creepbud.block.ModBlocks;
-import net.cvrse.creepbud.block.custom.BoomflowerCropBlock;
+import net.cvrse.creepbud.block.custom.BlastcapCropBlock;
 import net.cvrse.creepbud.item.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -16,9 +16,7 @@ public class ModModelProvider  extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-
-//        blockStateModelGenerator.registerCrop(ModBlocks.BOOMFLOWER_CROP, BoomflowerCropBlock.AGE, 0, 1, 2, 3);
-        blockStateModelGenerator.registerTintableCrossBlockStateWithStages(ModBlocks.BOOMFLOWER_CROP,BlockStateModelGenerator.TintType.NOT_TINTED, BoomflowerCropBlock.AGE, 0, 1, 2, 3);
+        blockStateModelGenerator.registerTintableCrossBlockStateWithStages(ModBlocks.BLASTCAP_CROP,BlockStateModelGenerator.TintType.NOT_TINTED, BlastcapCropBlock.AGE, 0, 1, 2, 3);
     }
 
     @Override

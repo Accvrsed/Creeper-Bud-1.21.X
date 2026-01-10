@@ -14,7 +14,7 @@ public class CreeperBudClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
-        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.BOOMFLOWER_CROP, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.BLASTCAP_CROP, RenderLayer.getCutout());
 
         EntityModelLayerRegistry.registerModelLayer(CreeperBudModel.BUD, CreeperBudModel::getTexturedModelData);
         EntityRendererRegistry.register(ModEntities.CREEPERBUD, CreeperBudRenderer::new);

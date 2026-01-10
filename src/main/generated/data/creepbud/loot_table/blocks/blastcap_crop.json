@@ -16,7 +16,7 @@
               "type": "minecraft:item",
               "conditions": [
                 {
-                  "block": "creepbud:boomflower_crop",
+                  "block": "creepbud:blastcap_crop",
                   "condition": "minecraft:block_state_property",
                   "properties": {
                     "age": "3"
@@ -27,7 +27,7 @@
             },
             {
               "type": "minecraft:item",
-              "name": "creepbud:boomflower_seeds"
+              "name": "creepbud:blastcap_spore"
             }
           ]
         }
@@ -38,7 +38,7 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
-          "block": "creepbud:boomflower_crop",
+          "block": "creepbud:blastcap_crop",
           "condition": "minecraft:block_state_property",
           "properties": {
             "age": "3"
@@ -59,7 +59,7 @@
               }
             }
           ],
-          "name": "creepbud:boomflower_seeds"
+          "name": "creepbud:blastcap_spore"
         }
       ],
       "rolls": 1.0

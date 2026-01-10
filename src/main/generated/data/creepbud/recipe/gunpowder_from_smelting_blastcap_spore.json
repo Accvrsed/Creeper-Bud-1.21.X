@@ -5,7 +5,7 @@
   "experience": 1.0,
   "group": "creepbud",
   "ingredient": {
-    "item": "creepbud:boomflower_seeds"
+    "item": "creepbud:blastcap_spore"
   },
   "result": {
     "id": "minecraft:gunpowder"

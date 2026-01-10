@@ -23,8 +23,9 @@ public class CreeperBud implements ModInitializer {
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
 		ModEntities.registerModEntities();
+//		ModLootTableModifiers.modifyLootTables();
 
-		CompostingChanceRegistry.INSTANCE.add(ModItems.BOOMFLOWER_SEEDS, 0.25f);
+		CompostingChanceRegistry.INSTANCE.add(ModItems.BLASTCAP_SPORE, 0.25f);
 		FabricDefaultAttributeRegistry.register(ModEntities.CREEPERBUD, CreeperBudEntity.createAttributes());
 	}
 }

@@ -1,5 +1,5 @@
-// 1.21	2026-01-05T17:26:05.0381256	Creeper Bud/Recipes
-97971657391cc7ec139f914723f82739bc85b332 data\creepbud\recipe\gunpowder_from_smelting_boomflower_seeds.json
-da865f8914c6831679f9af12dafa15814f46a8b9 data\creepbud\recipe\lime_dye.json
-edcf9dbed9f9b5cb1027e57f5f564184b571ebd0 data\creepbud\advancement\recipes\misc\lime_dye.json
-110a0469eb6305a95f42e98cfb3c4f2546329ab8 data\creepbud\advancement\recipes\misc\gunpowder_from_smelting_boomflower_seeds.json
+// 1.21	2026-01-10T02:49:46.3446846	Creeper Bud/Recipes
+1f55aa95ef8d90d9e43e99d8b34716f4f3403c39 data\creepbud\advancement\recipes\misc\gunpowder_from_smelting_blastcap_spore.json
+51972cf0149b5749acfb5d48d7a0b2b67cb3bfab data\creepbud\recipe\lime_dye.json
+6d757072e66016a12cee0e23a5aa413481310e8e data\creepbud\advancement\recipes\misc\lime_dye.json
+98917f41e0458ba27935d8e2d767a0af804860b6 data\creepbud\recipe\gunpowder_from_smelting_blastcap_spore.json

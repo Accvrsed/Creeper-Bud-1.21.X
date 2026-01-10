@@ -1,10 +1,10 @@
 {
   "display": {
     "icon": {
-      "id": "creepbud:boomflower_seeds"
+      "id": "creepbud:blastcap_spore"
     },
     "title": "Grow-a-Bud",
-    "description": "Plant a Boomflower",
+    "description": "Plant a Blastcap",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true
@@ -15,7 +15,7 @@
       "conditions": {
         "location": [
           {
-            "block": "creepbud:boomflower_crop",
+            "block": "creepbud:blastcap_crop",
             "condition": "minecraft:block_state_property"
           }
         ]

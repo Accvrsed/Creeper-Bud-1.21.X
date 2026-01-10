@@ -1,8 +1,8 @@
-// 1.21	2026-01-05T17:26:05.0401272	Creeper Bud/Model Definitions
-dacccd12afc1f4f48a5bf333cf2c17449bd681e0 assets\creepbud\models\block\boomflower_crop_stage1.json
-8ec0724fa69d5a4df6a015c8a41109ea9ea14ed7 assets\creepbud\models\block\boomflower_crop_stage3.json
+// 1.21	2026-01-10T02:49:46.3456791	Creeper Bud/Model Definitions
+a06fe33b2805077b59e1211e967bd8390f038f75 assets\creepbud\models\item\blastcap_spore.json
 9965b9860b1338c7af797f086678abd067e97d63 assets\creepbud\models\item\creeperbud_spawn_egg.json
-fbecc64a122e4d1efb6a636ed85e7d1c75d87575 assets\creepbud\models\item\boomflower_seeds.json
-08c889573cd63c7dae977654bf1307dd5f0e0f16 assets\creepbud\models\block\boomflower_crop_stage0.json
-6dd06c7de4a9febf14695631081e010fa2d1f613 assets\creepbud\models\block\boomflower_crop_stage2.json
-1dbfb3d2c18f7dd245444479c9a4a76e41502d50 assets\creepbud\blockstates\boomflower_crop.json
+5c0f8590b7de1793276ba66235f11a0050b23b39 assets\creepbud\blockstates\blastcap_crop.json
+c0d5d2c00c885e199e06077fa5e79ed9c36b76e6 assets\creepbud\models\block\blastcap_crop_stage3.json
+49888c0d87bc84fc00c43f44a82ce10e960ac4e9 assets\creepbud\models\block\blastcap_crop_stage0.json
+cd39116790eee06eb5f3c3d66c6f8042e3c2dc15 assets\creepbud\models\block\blastcap_crop_stage2.json
+8f5b27c4ef3d25aa869b74efaee06dba52fcfacd assets\creepbud\models\block\blastcap_crop_stage1.json

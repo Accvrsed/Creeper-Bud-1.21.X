@@ -1,8 +1,9 @@
 {
-  "item.creepbud.boomflower_seeds": "Boomflower Seeds",
+  "item.creepbud.blastcap_spore": "Blastcap Spore",
+  "tooltip.creepbud.blastcap_spore.tooltip": "",
   "item.creepbud.creeperbud_spawn_egg": "Creeper Bud Spawn Egg",
 
   "itemgroup.creepbud.creeperbud_items": "Creeper Bud Items",
-  "block.creepbud.boomflower_crop": "Boomflower Crop",
+  "block.creepbud.blastcap_crop": "Blastcap Crop",
   "entity.creepbud.creeperbud": "Creeper Bud"
 }

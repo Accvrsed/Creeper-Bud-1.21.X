@@ -3,25 +3,28 @@ import net.cvrse.creepbud.item.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
-public class BoomflowerCropBlock extends CropBlock {
+public class BlastcapCropBlock extends CropBlock {
     public static final int MAX_AGE = 3;
     public static final IntProperty AGE = IntProperty.of("age", 0, 3);
 
-    public BoomflowerCropBlock(Settings settings) {
+    public BlastcapCropBlock(Settings settings) {
         super(settings);
     }
 
     @Override
     protected ItemConvertible getSeedsItem() {
-        return ModItems.BOOMFLOWER_SEEDS;
+        return ModItems.BLASTCAP_SPORE;
     }
 
     @Override
@@ -67,6 +70,29 @@ public class BoomflowerCropBlock extends CropBlock {
                 pos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 0.2,
                 0.0, 0.02, 0.0
         );
+    }
+
+    @Override
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        int age = this.getAge(state);
+
+        // Only spawn particles if fully grown
+        if (age == MAX_AGE) {
+            if (world.isClient) { // client-side only
+                for (int i = 0; i < 5; i++) {
+                    world.addParticle(
+                            ParticleTypes.POOF,
+                            pos.getX() + 0.5 + (world.random.nextDouble() - 0.5) * 0.3,
+                            pos.getY() + 0.5,
+                            pos.getZ() + 0.5 + (world.random.nextDouble() - 0.5) * 0.3,
+                            0.0, 0.05, 0.0
+                    );
+                }
+            }
+        }
+
+        // Always call super to handle vanilla drops
+        return super.onBreak(world, pos, state, player);
     }
 }
 

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_boomflower_seeds": {
+    "has_blastcap_spore": {
       "conditions": {
         "items": [
           {
-            "items": "creepbud:boomflower_seeds"
+            "items": "creepbud:blastcap_spore"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_boomflower_seeds"
+      "has_blastcap_spore"
     ]
   ],
   "rewards": {
